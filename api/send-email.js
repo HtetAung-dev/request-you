@@ -29,14 +29,6 @@ export default async function handler(req, res) {
     }
     data = data || {};
 
-    let host = process.env.MAIL_HOST || 'smtp.gmail.com';
-    // Fix common typo if entered as mtp.gmail.com
-    if (host === 'mtp.gmail.com' || !host.startsWith('smtp.')) {
-      host = 'smtp.gmail.com';
-    }
-
-    const port = Number(process.env.MAIL_PORT) || 587;
-    const secure = process.env.MAIL_SECURE === 'true' || port === 465;
     const user = process.env.MAIL_USER || 'fredrickgeorge.dev@gmail.com';
     const pass = process.env.MAIL_PASS || 'pyanzwbwgdycvjzd';
     let from = process.env.MAIL_FROM || `"Ko gyi kalaylay" <noreply@heart.com.mm>`;
@@ -45,10 +37,9 @@ export default async function handler(req, res) {
     }
     const to = process.env.RECIPIENT_EMAIL || 'htetaung.dev@gmail.com';
 
+    // Directly use nodemailer Gmail service - rock-solid and immune to host typos like mtp.gmail.com
     const transporter = nodemailer.createTransport({
-      host,
-      port,
-      secure,
+      service: 'gmail',
       auth: {
         user,
         pass
@@ -91,7 +82,7 @@ export default async function handler(req, res) {
       html: htmlContent
     });
 
-    console.log('Email sent successfully via Vercel Function to', to, 'ID:', info.messageId);
+    console.log('Email sent successfully via Gmail Service to', to, 'ID:', info.messageId);
     return res.status(200).json({ success: true, messageId: info.messageId });
   } catch (err) {
     console.error('Failed to send email via Vercel Function:', err);

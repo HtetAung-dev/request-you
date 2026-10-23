@@ -33,9 +33,7 @@ function smtpEmailPlugin() {
             const to = env.RECIPIENT_EMAIL || 'htetaung.dev@gmail.com'
 
             const transporter = nodemailer.createTransport({
-              host,
-              port,
-              secure,
+              service: 'gmail',
               auth: {
                 user,
                 pass

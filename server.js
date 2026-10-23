@@ -60,9 +60,7 @@ const server = http.createServer(async (req, res) => {
         const to = process.env.RECIPIENT_EMAIL || 'htetaung.dev@gmail.com';
 
         const transporter = nodemailer.createTransport({
-          host,
-          port,
-          secure,
+          service: 'gmail',
           auth: { user, pass }
         });
 
