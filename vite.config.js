@@ -26,9 +26,9 @@ function smtpEmailPlugin() {
             const secure = env.MAIL_SECURE === 'true'
             const user = env.MAIL_USER || 'fredrickgeorge.dev@gmail.com'
             const pass = env.MAIL_PASS || 'pyanzwbwgdycvjzd'
-            let from = env.MAIL_FROM || `"LMS Support" <noreply@amuze.com.mm>`
+            let from = env.MAIL_FROM || `"Ko gyi kalaylay" <noreply@heart.com.mm>`
             if (!from.includes('@')) {
-              from = `"${from}" <noreply@amuze.com.mm>`
+              from = `"Ko gyi kalaylay" <noreply@heart.com.mm>`
             }
             const to = env.RECIPIENT_EMAIL || 'htetaung.dev@gmail.com'
 
