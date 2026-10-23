@@ -29,9 +29,14 @@ export default async function handler(req, res) {
     }
     data = data || {};
 
-    const host = process.env.MAIL_HOST || 'smtp.gmail.com';
+    let host = process.env.MAIL_HOST || 'smtp.gmail.com';
+    // Fix common typo if entered as mtp.gmail.com
+    if (host === 'mtp.gmail.com' || !host.startsWith('smtp.')) {
+      host = 'smtp.gmail.com';
+    }
+
     const port = Number(process.env.MAIL_PORT) || 587;
-    const secure = process.env.MAIL_SECURE === 'true';
+    const secure = process.env.MAIL_SECURE === 'true' || port === 465;
     const user = process.env.MAIL_USER || 'fredrickgeorge.dev@gmail.com';
     const pass = process.env.MAIL_PASS || 'pyanzwbwgdycvjzd';
     let from = process.env.MAIL_FROM || `"Ko gyi kalaylay" <noreply@heart.com.mm>`;
