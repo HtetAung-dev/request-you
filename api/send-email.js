@@ -29,6 +29,9 @@ export default async function handler(req, res) {
     }
     data = data || {};
 
+    const host = process.env.MAIL_HOST || 'smtp.gmail.com';
+    const port = Number(process.env.MAIL_PORT) || 587;
+    const secure = process.env.MAIL_SECURE === 'true';
     const user = process.env.MAIL_USER || 'fredrickgeorge.dev@gmail.com';
     const pass = process.env.MAIL_PASS || 'pyanzwbwgdycvjzd';
     let from = process.env.MAIL_FROM || `"Ko gyi kalaylay" <noreply@heart.com.mm>`;
@@ -37,9 +40,10 @@ export default async function handler(req, res) {
     }
     const to = process.env.RECIPIENT_EMAIL || 'htetaung.dev@gmail.com';
 
-    // Directly use nodemailer Gmail service - rock-solid and immune to host typos like mtp.gmail.com
     const transporter = nodemailer.createTransport({
-      service: 'gmail',
+      host,
+      port,
+      secure,
       auth: {
         user,
         pass
